@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct first_todoView: View {
+    @State var newTask: String = "" // @State...値の更新を監視。通知が来たら自動でViewを再描画
     var todoLists: [(isChecked: Bool, task: String)] = [
         (isChecked: false, task: "読書する"),
         (isChecked: true, task: "掃除する"),
@@ -18,8 +19,20 @@ struct first_todoView: View {
         VStack {
             Text("ToDoList")
                 .font(.system(size: 30, weight: .bold, design: .default))
-            ForEach(todoLists.indices, id:\.self) { index in
-                HStack {
+            HStack {
+                TextField("タスクを入力してください", text: $newTask)
+                    .textFieldStyle(.roundedBorder)
+                    .padding(EdgeInsets(
+                        top: 10,
+                        leading: 20,
+                        bottom: 10,
+                        trailing: 15
+                    ))
+                Button("追加", action: {})
+                    .padding(.trailing, 20)
+            }
+            ForEach(todoLists.indices, id:\.self) { index in  // ForEach...breakやreturnで抜け出せない繰り返し処理
+                HStack { // HStack...横に並べて表示
                     Image(systemName:
                             todoLists[index].isChecked ? "checkmark.square":"square"
                     )
