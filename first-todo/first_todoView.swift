@@ -33,8 +33,14 @@ struct first_todoView: View {
                         bottom: 10,
                         trailing: 15
                     ))
-                Button("追加", action: {})
-                    .padding(.trailing, 20)
+                Button("追加", action: {
+                    todoLists.append(
+                        ToDoItem(isChecked: false, task: newTask)
+                    )
+                    newTask = ""
+                })
+                .padding(.trailing, 20)
+                .disabled(newTask.isEmpty)
             }
          ForEach(todoLists.indices, id:\.self) { index in  // ForEach...breakやreturnで抜け出せない繰り返し処理
                 HStack { // HStack...横に並べて表示
