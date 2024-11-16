@@ -53,7 +53,13 @@ struct first_todoView: View {
                         .imageScale(.large)
                         .foregroundStyle(.pink)
                     })
-                    Text(todoLists[index].task)
+                    if todoLists[index].isChecked {
+                        Text(todoLists[index].task)
+                            .strikethrough()
+                            .foregroundColor(Color.gray)
+                    } else {
+                        Text(todoLists[index].task)
+                    }
                 }
                 .padding(.top, 1)
                 .padding(.leading, 20)
