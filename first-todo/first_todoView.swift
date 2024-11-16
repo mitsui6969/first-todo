@@ -7,12 +7,17 @@
 
 import SwiftUI
 
+struct ToDoItem {
+    var isChecked: Bool
+    var task: String
+}
+
 struct first_todoView: View {
     @State var newTask: String = "" // @State...値の更新を監視。通知が来たら自動でViewを再描画
-    var todoLists: [(isChecked: Bool, task: String)] = [
-        (isChecked: false, task: "読書する"),
-        (isChecked: true, task: "掃除する"),
-        (isChecked: false, task: "散歩する")
+    @State var todoLists: [ToDoItem] = [
+        ToDoItem(isChecked: false, task: "読書する"),
+        ToDoItem(isChecked: true, task: "掃除する"),
+        ToDoItem(isChecked: false, task: "散歩する")
     ]
     
     var body: some View {
@@ -31,11 +36,17 @@ struct first_todoView: View {
                 Button("追加", action: {})
                     .padding(.trailing, 20)
             }
-            ForEach(todoLists.indices, id:\.self) { index in  // ForEach...breakやreturnで抜け出せない繰り返し処理
+         ForEach(todoLists.indices, id:\.self) { index in  // ForEach...breakやreturnで抜け出せない繰り返し処理
                 HStack { // HStack...横に並べて表示
-                    Image(systemName:
-                            todoLists[index].isChecked ? "checkmark.square":"square"
-                    )
+                    Button(action: {
+                        todoLists[index].isChecked.toggle()
+                    }, label: {
+                        Image(systemName:
+                                todoLists[index].isChecked ? "checkmark.square":"square"
+                        )
+                        .imageScale(.large)
+                        .foregroundStyle(.pink)
+                    })
                     Text(todoLists[index].task)
                 }
                 .padding(.top, 1)
